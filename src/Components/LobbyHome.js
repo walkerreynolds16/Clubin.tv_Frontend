@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import '../Styles/App.css';
+import '../Styles/LobbyHome.css';
 import Axios from 'axios'
 import {API_ENDPOINT} from '../api-config.js'
 
-class App extends Component {
+class LobbyHome extends Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      lobbyCode: '',
-      memberName: '',
-      makeTestLobbyCode: ''
+      lobbyCode: this.props.lobbyCode,
+      memberName: this.props.memberName
     }
   }
 
@@ -40,10 +39,10 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className="LobbyHome">
+        <header className="LobbyHome-header">
 
-          
+          <h1>U have joined lobby {}</h1>
 
         </header>
       </div>
@@ -51,4 +50,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default LobbyHome;

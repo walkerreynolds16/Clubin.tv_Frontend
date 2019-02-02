@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-import '../Styles/Home.css';
+import { Button, Form } from 'react-bootstrap';
+import '../Styles/JoinLobby.css';
 import Axios from 'axios'
 import {API_ENDPOINT} from '../api-config.js'
 
-class Home extends Component {
+class JoinLobby extends Component {
 
   constructor(props) {
     super(props)
@@ -14,24 +14,6 @@ class Home extends Component {
       memberName: '',
       makeTestLobbyCode: ''
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener("beforeunload", (ev) => this.handleWindowClose(ev));
-  }
-
-  handleWindowClose = () => {
-    Axios.defaults.headers.post['Content-Type'] = 'application/json'
-
-    var url = API_ENDPOINT + ''
-    Axios.post(url)
-      .then((response) => {
-        console.log(response)
-
-        this.setState({
-          makeTestLobbyCode: response['data']
-        })
-      })
   }
 
   handleLobbyCodeInputChange = (event) => {
@@ -65,6 +47,18 @@ class Home extends Component {
     Axios.post(url, data)
       .then((response) => {
         console.log(response)
+
+        if(response['data']['didJoin']){ //Member was able to join lobby, show them the main app page for that lobby
+          var data = {'hasJoined': true, 'lobbyCode': this.state.lobbyCodeInput, 'memberName': this.state.memberName}
+          this.props.joinedALobby(data)
+
+        }else { //Member wasn't able to join, display why not
+          this.setState({
+            lobbyCodeInput: ''
+          })
+        }
+
+
       })
 
   }
@@ -78,41 +72,39 @@ class Home extends Component {
         console.log(response)
 
         this.setState({
-          makeTestLobbyCode: response['data']
+          lobbyCodeInput: response['data']
         })
+
+
       })
   }
 
 
   render() {
     return (
-      <div className="Home">
-        <header className="Home-header">
+      <div className="JoinLobby">
+        <header className="JoinLobby-header">
 
-          <form onSubmit={(e) => this.submitLobbyCode(e)}>
-            <h3 style={{'color':'black'}}>Lobby Code</h3>
-            <input 
-              value={this.state.lobbyCodeInput} 
-              onChange={this.handleLobbyCodeInputChange} 
-              placeholder={'Enter 4 letter code'} 
-              maxLength={4} 
-              autoFocus />
+          <Form>
+            <Form.Group controlId="formLobbyCode">
+              <Form.Label>Lobby Code</Form.Label>
+              <Form.Control maxLength={4} placeholder="Enter 4 letter code" onChange={this.handleLobbyCodeInputChange} value={this.state.lobbyCodeInput}/>
+            </Form.Group>
+
+            <Form.Group controlId="formMemberName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control maxLength={20} placeholder="Enter your name" onChange={this.handleMemberNameChange}  />
+            </Form.Group>
             
-            <input 
-              value={this.state.memberName} 
-              onChange={this.handleMemberNameChange} 
-              placeholder={'Enter your name'} 
-              maxLength={20} 
-              style={{'marginTop':'10px'}} 
-              autoFocus />
-              
-            <br/>
-
             <Button 
               onClick={(e) => { this.submitLobbyCode(e) }} 
-              style={{'marginTop':'10px'}}>
+              style={{'marginTop':'20px'}}>
               Join Lobby
             </Button>
+
+            {/* Testing stuff */}
+
+            <br/>
 
             <Button 
               onClick={(e) => { this.makeTestLobby(e) }} 
@@ -120,9 +112,7 @@ class Home extends Component {
               Make lobby
             </Button>
 
-            <h3>{this.state.makeTestLobbyCode}</h3>
-
-          </form>
+          </Form>
 
         </header>
       </div>
@@ -130,4 +120,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default JoinLobby;

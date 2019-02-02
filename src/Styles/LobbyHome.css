@@ -1,8 +1,9 @@
-.Home {
+.LobbyHome {
   text-align: center;
 }
 
-.Home-header {
+
+.LobbyHome-header {
   background-color: #FFF;
   min-height: 100vh;
   display: flex;
@@ -11,4 +12,3 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
-

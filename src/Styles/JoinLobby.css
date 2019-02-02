@@ -1,9 +1,8 @@
-.App {
+.JoinLobby {
   text-align: center;
 }
 
-
-.App-header {
+.JoinLobby-header {
   background-color: #FFF;
   min-height: 100vh;
   display: flex;
@@ -12,3 +11,4 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
+
