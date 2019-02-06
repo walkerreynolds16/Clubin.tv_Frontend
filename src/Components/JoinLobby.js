@@ -72,7 +72,8 @@ class JoinLobby extends Component {
         console.log(response)
 
         this.setState({
-          lobbyCodeInput: response['data']
+          lobbyCodeInput: response['data'],
+          memberName: 'Walker'
         })
 
 
@@ -93,7 +94,7 @@ class JoinLobby extends Component {
 
             <Form.Group controlId="formMemberName">
               <Form.Label>Name</Form.Label>
-              <Form.Control maxLength={20} placeholder="Enter your name" onChange={this.handleMemberNameChange}  />
+              <Form.Control maxLength={20} placeholder="Enter your name" onChange={this.handleMemberNameChange} value={this.state.memberName}  />
             </Form.Group>
             
             <Button 

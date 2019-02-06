@@ -1,0 +1,38 @@
+.AddVideo {
+  text-align: center;
+  background-color: #FFF;
+}
+
+
+.AddVideo-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.AddVideo-search {
+  display: flex;
+  height: calc(10% + 30px);
+  align-items: flex-start;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  border-bottom: 2px;
+  margin-top: 30px;
+  border-color: black
+}
+
+.AddVideo-videoList {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  position: absolute;
+  top: 12%;
+  left: 0px;
+  right: 0px;
+  overflow-y: scroll;
+  height: 88%;
+}

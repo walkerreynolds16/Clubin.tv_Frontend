@@ -4,6 +4,8 @@ import '../Styles/LobbyHome.css';
 import Axios from 'axios'
 import {API_ENDPOINT} from '../api-config.js'
 
+import AddVideo from './AddVideo'
+
 class LobbyHome extends Component {
 
   constructor(props) {
@@ -11,12 +13,16 @@ class LobbyHome extends Component {
 
     this.state = {
       lobbyCode: this.props.lobbyCode,
-      memberName: this.props.memberName
+      memberName: this.props.memberName,
+      lobbyInfo: {"currentVideo": {'videoId': '', 'videoTitle': ''}, 'lobbyCode': this.props.lobbyCode, 'memberList': [], 'videoQueue': []},
+      showAddVideo: false
     }
   }
 
   componentDidMount() {
-    window.addEventListener("beforeunload", (ev) => this.handleWindowClose(ev));
+    window.addEventListener("beforeunload", (ev) => this.handleWindowClose(ev)); 
+
+    this.getLobbyInfo()
   }
 
   handleWindowClose = () => {
@@ -34,15 +40,37 @@ class LobbyHome extends Component {
       })
   }
 
-  
+  getLobbyInfo = () => {
 
+    var url = API_ENDPOINT + '/getLobbyInfo?lobbyCode=' + this.state.lobbyCode
+    Axios.get(url)
+      .then((response) => {
+        console.log(response)
+        this.setState({
+          lobbyInfo: response['data']
+        })
+      })
+  }
+
+  clickAddVideo = () => {
+    this.setState({
+      showAddVideo: true
+    })
+  }
 
   render() {
+
+    if(this.state.showAddVideo){
+      return(<AddVideo/>)
+    }
+
     return (
       <div className="LobbyHome">
         <header className="LobbyHome-header">
 
-          <h1>U have joined lobby {}</h1>
+          <h3>Now Playing - {this.state.lobbyInfo.currentVideo.videoTitle}</h3>
+
+          <Button onClick={this.clickAddVideo}>Add Video</Button>
 
         </header>
       </div>
