@@ -36,3 +36,30 @@
   overflow-y: scroll;
   height: 88%;
 }
+
+.AddVideo-videoList-video-container {
+  position: relative;
+  display: flex;
+}
+
+.AddVideo-videoList-video-img {
+  width: 120px;
+  height: 90px;
+  flex-shrink: 0;
+}
+
+.AddVideo-videoList-video-metadata-container {
+  min-width: 0;
+  overflow: hidden;
+  flex-grow: 1;
+  padding: 0 8px;
+}
+
+.AddVideo-videoList-video-metadata-title {
+  display: inline-block;
+  font-weight: bold;
+  margin-left: 5px;
+  word-wrap: break-word;
+  font-size: 3vmin !important;
+}
+

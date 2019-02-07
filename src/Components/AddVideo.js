@@ -88,7 +88,7 @@ class AddVideo extends Component {
 
   render() {
     return (
-      <div className="AddVideo">
+      <div >
 
           <div className="AddVideo-search">
             <form onSubmit={this.searchForVideo}>
@@ -114,10 +114,11 @@ class AddVideo extends Component {
 
               return (
                 <ListGroupItem>
-                  <div style={{ 'position': 'relative' }}>
-                    <img src={imageLink} style={{ 'width': '120px', 'height': '90px' }} alt={index}/>
-                    <h5 style={{ 'display': 'inline-block', 'fontWeight': 'bold', 'marginLeft': '5px', 'wordWrap': 'break-all' }}>{value.videoTitle}</h5>
-                    
+                  <div className="AddVideo-videoList-video-container">
+                    <img className="AddVideo-videoList-video-img" src={imageLink} alt={index}/>
+                    <div className="AddVideo-videoList-video-metadata-container">
+                      <h5 className="AddVideo-videoList-video-metadata-title"> {value.videoTitle} </h5>
+                    </div>
                   </div>
                 </ListGroupItem>
               )
