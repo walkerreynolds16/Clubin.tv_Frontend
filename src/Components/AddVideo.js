@@ -37,14 +37,16 @@ class AddVideo extends Component {
   }
 
   handleSearchInputChange = (e) => {
+    e.preventDefault()
     this.setState({
       searchVideoInput: e.target.value
     })
   }
 
   searchForVideo = (e) => {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+    if(e !== undefined){
+      e.preventDefault()
+    }
 
     var q = this.state.searchVideoInput
     var maxResults = 25
@@ -89,20 +91,20 @@ class AddVideo extends Component {
       <div className="AddVideo">
 
           <div className="AddVideo-search">
-            <Form >
+            <form onSubmit={this.searchForVideo}>
               <Form.Group as={Row}>
                 <Col >
                   <Form.Control placeholder="Search YouTube" onChange={this.handleSearchInputChange} value={this.state.searchVideoInput} />    
                 </Col>
 
                 <Button
-                  onClick={(e) => { this.searchForVideo(e)}}>
+                  onClick={this.searchForVideo}>
                   Search
                 </Button>
 
               </Form.Group>
 
-            </Form>
+            </form>
           </div>
 
           <div className="AddVideo-videoList" style={{ 'overflowY': 'auto' }}>

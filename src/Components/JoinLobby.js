@@ -53,6 +53,8 @@ class JoinLobby extends Component {
           this.props.joinedALobby(data)
 
         }else { //Member wasn't able to join, display why not
+          alert(response['data']['Message'])
+
           this.setState({
             lobbyCodeInput: ''
           })
