@@ -29,7 +29,10 @@ class JoinLobby extends Component {
   }
 
   submitLobbyCode = (e) => {
-    e.preventDefault()
+    if(e !== undefined){
+      e.preventDefault()
+    }
+
     console.log(this.state.lobbyCodeInput)
 
     if(this.state.lobbyCodeInput.match(/\d+/g)){
@@ -88,7 +91,7 @@ class JoinLobby extends Component {
       <div className="JoinLobby">
         <header className="JoinLobby-header">
 
-          <Form>
+          <Form onSubmit={this.submitLobbyCode}>
             <Form.Group controlId="formLobbyCode">
               <Form.Label>Lobby Code</Form.Label>
               <Form.Control maxLength={4} placeholder="Enter 4 letter code" onChange={this.handleLobbyCodeInputChange} value={this.state.lobbyCodeInput}/>
@@ -101,7 +104,8 @@ class JoinLobby extends Component {
             
             <Button 
               onClick={(e) => { this.submitLobbyCode(e) }} 
-              style={{'marginTop':'20px'}}>
+              style={{'marginTop':'20px'}}
+              type="submit">
               Join Lobby
             </Button>
 
