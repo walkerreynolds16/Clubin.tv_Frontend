@@ -58,9 +58,15 @@
 
 .AddVideo-videoList-video-metadata-title {
   display: inline-block;
-  font-weight: bold;
   margin-left: 5px;
   word-wrap: break-word;
   font-size: 3vmin !important;
+}
+
+.AddVideo-videoList-video-metadata-channelName {
+  display: inline-block;
+  margin-left: 5px;
+  word-wrap: break-word;
+  font-size: 2vmin !important;
 }
 

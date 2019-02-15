@@ -61,7 +61,7 @@ class LobbyHome extends Component {
   render() {
 
     if(this.state.showAddVideo){
-      return(<AddVideo/>)
+      return(<AddVideo lobbyCode={this.state.lobbyCode} memberName={this.state.memberName}/>)
     }
 
     return (

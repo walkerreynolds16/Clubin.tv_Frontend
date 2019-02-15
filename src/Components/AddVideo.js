@@ -72,7 +72,6 @@ class AddVideo extends Component {
           if (videoId !== undefined) {
             //add videos to a list to be displayed on the modal
             searchList.push({ videoId: videoId, videoTitle: videoTitle, duration: '', channelName, viewCount: ''})
-
           }
         }
 
@@ -82,6 +81,24 @@ class AddVideo extends Component {
       })
 
 
+  }
+
+  addVideoToLobbyQueue = (value) => {
+    console.log(value)
+
+    var data = {
+      lobbyCode: this.state.lobbyCode,
+      memberName: this.state.memberName,
+      video: value
+    }
+
+    Axios.defaults.headers.post['Content-Type'] = 'application/json'
+
+    var url = API_ENDPOINT + '/addVideo'
+    Axios.post(url, data)
+      .then((response) => {
+        console.log(response)
+      })
   }
 
 
@@ -113,11 +130,13 @@ class AddVideo extends Component {
                 var imageLink = 'http://img.youtube.com/vi/' + value.videoId + '/0.jpg'
 
               return (
-                <ListGroupItem>
+                <ListGroupItem onClick={() => this.addVideoToLobbyQueue(value)} key={index}>
                   <div className="AddVideo-videoList-video-container">
                     <img className="AddVideo-videoList-video-img" src={imageLink} alt={index}/>
                     <div className="AddVideo-videoList-video-metadata-container">
                       <h5 className="AddVideo-videoList-video-metadata-title"> {value.videoTitle} </h5>
+                      <br/>
+                      <p className="AddVideo-videoList-video-metadata-channelName">{value.channelName}</p>
                     </div>
                   </div>
                 </ListGroupItem>
