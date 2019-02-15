@@ -89,7 +89,7 @@ class AddVideo extends Component {
     var data = {
       lobbyCode: this.state.lobbyCode,
       memberName: this.state.memberName,
-      video: value
+      video: {"videoId": value.videoId, 'videoTitle': value.videoId, 'channelName': value.channelName}
     }
 
     Axios.defaults.headers.post['Content-Type'] = 'application/json'
