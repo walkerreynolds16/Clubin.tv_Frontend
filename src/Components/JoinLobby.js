@@ -18,7 +18,7 @@ class JoinLobby extends Component {
 
   handleLobbyCodeInputChange = (event) => {
     this.setState({
-      lobbyCodeInput: event.target.value
+      lobbyCodeInput: event.target.value.toUpperCase()
     })
   }
 
