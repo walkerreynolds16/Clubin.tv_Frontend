@@ -18,7 +18,7 @@ class AddVideo extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("beforeunload", (ev) => this.handleWindowClose(ev)); 
+    // window.addEventListener("beforeunload", (ev) => this.handleWindowClose(ev)); 
   }
 
   handleWindowClose = () => {
