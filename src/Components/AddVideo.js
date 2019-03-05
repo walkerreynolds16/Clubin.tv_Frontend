@@ -130,7 +130,7 @@ class AddVideo extends Component {
                 var imageLink = 'http://img.youtube.com/vi/' + value.videoId + '/0.jpg'
 
               return (
-                <ListGroupItem onClick={() => this.addVideoToLobbyQueue(value)} key={index}>
+                <ListGroupItem onClick={() => this.addVideoToLobbyQueue(value)} key={index} action>
                   <div className="AddVideo-videoList-video-container">
                     <img className="AddVideo-videoList-video-img" src={imageLink} alt={index}/>
                     <div className="AddVideo-videoList-video-metadata-container">
