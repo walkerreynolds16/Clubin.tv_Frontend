@@ -3,8 +3,12 @@ import { Button } from 'react-bootstrap';
 import '../Styles/LobbyHome.css';
 import Axios from 'axios'
 import {API_ENDPOINT} from '../api-config.js'
+import openSocket from 'socket.io-client';
 
 import AddVideo from './AddVideo'
+
+const socket = openSocket.connect(API_ENDPOINT, {transports: ['websocket']})
+
 
 class LobbyHome extends Component {
 
@@ -22,7 +26,20 @@ class LobbyHome extends Component {
   componentDidMount() {
     window.addEventListener("beforeunload", (ev) => this.handleWindowClose(ev)); 
 
+    socket.emit("Event_mobileConnection", {'lobbyCode': this.state.lobbyCode, 'memberName': this.state.memberName})
+
+    socket.on('Event_lobbyUpdate', (data) => this.lobbyUpdate(data))
+
     this.getLobbyInfo()
+  }
+
+  lobbyUpdate = (data) => {
+    console.log("lobby Update")
+    console.log(data)
+
+    this.setState({
+      lobbyInfo: {'currentVideo': data['currentVideo'], 'lobbyCode': data['lobbyCode'], 'memberList': data['memberList'], 'videoQueue': data['videoQueue']}
+    })
   }
 
   handleWindowClose = () => {
@@ -38,6 +55,8 @@ class LobbyHome extends Component {
       .then((response) => {
         console.log(response)
       })
+
+      
   }
 
   getLobbyInfo = () => {
