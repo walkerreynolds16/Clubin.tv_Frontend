@@ -19,6 +19,11 @@ class AddVideo extends Component {
 
   componentDidMount() {
     // window.addEventListener("beforeunload", (ev) => this.handleWindowClose(ev)); 
+
+    window.onpopstate  = (e) => {
+      console.log("back")
+      this.props.onBackToHome()
+    }
   }
 
   handleWindowClose = () => {
@@ -124,7 +129,7 @@ class AddVideo extends Component {
             </form>
           </div>
 
-          <div className="AddVideo-videoList" style={{ 'overflowY': 'auto' }}>
+          <div className="AddVideo-videoList">
             <ListGroup>
               {this.state.searchList.map((value, index) => {
                 var imageLink = 'http://img.youtube.com/vi/' + value.videoId + '/0.jpg'
@@ -145,6 +150,8 @@ class AddVideo extends Component {
               })}
             </ListGroup>
           </div>
+
+          <Button className="AddVideo-goBack" onClick={this.props.onBackToHome}>Back</Button>
 
       </div>
 

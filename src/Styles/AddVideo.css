@@ -34,7 +34,7 @@
   left: 0px;
   right: 0px;
   overflow-y: scroll;
-  height: 88%;
+  height: 80%;
 }
 
 .AddVideo-videoList-video-container {
@@ -68,5 +68,11 @@
   margin-left: 5px;
   word-wrap: break-word;
   font-size: 2vmin !important;
+}
+
+.AddVideo-goBack {
+  position: fixed;
+  bottom: 1%;
+  right: 5%;
 }
 

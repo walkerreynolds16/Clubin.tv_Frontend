@@ -5,6 +5,8 @@ import Axios from 'axios'
 import {API_ENDPOINT} from '../api-config.js'
 import openSocket from 'socket.io-client';
 
+
+import JoinedUsers from './JoinedUsers'
 import AddVideo from './AddVideo'
 
 const socket = openSocket.connect(API_ENDPOINT, {transports: ['websocket']})
@@ -18,8 +20,9 @@ class LobbyHome extends Component {
     this.state = {
       lobbyCode: this.props.lobbyCode,
       memberName: this.props.memberName,
-      lobbyInfo: {"currentVideo": {'videoId': '', 'videoTitle': ''}, 'lobbyCode': this.props.lobbyCode, 'memberList': [], 'videoQueue': []},
-      showAddVideo: false
+      lobbyInfo: {"currentVideo": -1, 'lobbyCode': this.props.lobbyCode, 'memberList': [], 'videoQueue': [], 'playingVideo': false},
+      showAddVideo: false,
+      showJoinedUsers: false
     }
   }
 
@@ -30,15 +33,17 @@ class LobbyHome extends Component {
 
     socket.on('Event_lobbyUpdate', (data) => this.lobbyUpdate(data))
 
+    
+
     this.getLobbyInfo()
   }
 
   lobbyUpdate = (data) => {
     console.log("lobby Update")
-    console.log(data)
+    console.log(data['currentVideo'])
 
     this.setState({
-      lobbyInfo: {'currentVideo': data['currentVideo'], 'lobbyCode': data['lobbyCode'], 'memberList': data['memberList'], 'videoQueue': data['videoQueue']}
+      lobbyInfo: {'currentVideo': data['currentVideo'], 'lobbyCode': data['lobbyCode'], 'memberList': data['memberList'], 'videoQueue': data['videoQueue'], 'playingVideo': data['playingVideo']}
     })
   }
 
@@ -77,21 +82,56 @@ class LobbyHome extends Component {
     })
   }
 
+  onBackToHome = () => {
+    this.setState({
+      showAddVideo: false,
+      showJoinedUsers: false
+    })
+
+    this.forceUpdate()
+  }
+
+  viewJoinedUsers = () => {
+    this.setState({
+      showJoinedUsers: true
+    })
+  }
+
   render() {
 
+    console.log('lobbyInfo')
+    console.log(this.state.lobbyInfo)
+
     if(this.state.showAddVideo){
-      return(<AddVideo lobbyCode={this.state.lobbyCode} memberName={this.state.memberName}/>)
+      return(<AddVideo lobbyCode={this.state.lobbyCode} memberName={this.state.memberName} onBackToHome={() => this.onBackToHome()}/>)
+    }
+
+    if(this.state.showJoinedUsers){
+      return(<JoinedUsers onBackToHome={() => this.onBackToHome()} users={this.state.lobbyInfo.memberList}/>)
     }
 
     return (
       <div className="LobbyHome">
         <header className="LobbyHome-header">
 
-          <h3>Now Playing - {this.state.lobbyInfo.currentVideo.videoTitle}</h3>
+          {!this.state.lobbyInfo.playingVideo &&
+            <h3>No one is Playing</h3>
+          }
 
+          {this.state.lobbyInfo.playingVideo  &&
+            <h3>Now Playing - {this.state.lobbyInfo.currentVideo.videoTitle}</h3>
+          }
+
+        </header> 
+
+        <div className="LobbyHome-button-container">
           <Button onClick={this.clickAddVideo}>Add Video</Button>
+          <br/>
+          <Button onClick={this.viewJoinedUsers}>View Joined Users</Button>
+        </div>
+          
 
-        </header>
+        
       </div>
     );
   }
