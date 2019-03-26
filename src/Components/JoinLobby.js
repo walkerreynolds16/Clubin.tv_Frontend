@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import '../Styles/JoinLobby.css';
 import Axios from 'axios'
-import {API_ENDPOINT} from '../api-config.js'
+import {API_ENDPOINT, SHOWMAKELOBBYBUTTON} from '../api-config.js'
+import titlePic from '../res/title.png'
 
 class JoinLobby extends Component {
 
@@ -89,7 +90,10 @@ class JoinLobby extends Component {
   render() {
     return (
       <div className="JoinLobby">
+        <img src={titlePic} alt="Clubin.tv" style={{'position': 'relative', 'top': '50px'}}/>
         <header className="JoinLobby-header">
+
+          
 
           <Form onSubmit={this.submitLobbyCode}>
             <Form.Group controlId="formLobbyCode">
@@ -113,11 +117,14 @@ class JoinLobby extends Component {
 
             <br/>
 
-            <Button 
-              onClick={(e) => { this.makeTestLobby(e) }} 
-              style={{'margin':'20px'}}>
-              Make lobby
-            </Button>
+            {SHOWMAKELOBBYBUTTON &&
+              <Button 
+                onClick={(e) => { this.makeTestLobby(e) }} 
+                style={{'margin':'20px'}}>
+                Make lobby
+              </Button>
+            }
+            
 
           </Form>
 
