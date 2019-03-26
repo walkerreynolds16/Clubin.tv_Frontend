@@ -115,6 +115,7 @@ class JoinLobby extends Component {
 
             {/* Testing stuff */}
 
+
             <br/>
 
             {SHOWMAKELOBBYBUTTON &&
