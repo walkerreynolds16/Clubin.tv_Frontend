@@ -1,56 +1,55 @@
-import React, { Component } from 'react';
-import { Button, ListGroup, ListGroupItem  } from 'react-bootstrap';
-import '../Styles/JoinedUsers.css';
+import React, { Component } from "react";
+import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
+import "../Styles/JoinedUsers.css";
 
+import titlePic from "../res/No-Avatar-High-Definition.jpg";
 
 
 class JoinedUsers extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state = {
-    }
+    this.state = {};
   }
 
-  
-
   render() {
-
-    
-
     return (
       <div className="JoinedUsers">
-        <header className="JoinedUsers-header">
-            Joined Users
-        </header>
+        <header className="JoinedUsers-header">Joined Users</header>
 
         <div className="JoinedUsers-videoList">
-            <ListGroup>
-              {this.props.users.map((value, index) => {
-                var imageLink = 'https://vignette.wikia.nocookie.net/micronations/images/4/41/No-Avatar-High-Definition.jpg/revision/latest?cb=20140823100428'
+          <ListGroup>
+            {this.props.users.map((value, index) => {
 
               return (
                 <ListGroupItem key={index} action>
                   <div className="JoinedUsers-videoList-video-container">
-                    <img className="JoinedUsers-videoList-video-img" src={imageLink} alt={index}/>
+                    <img
+                      className="JoinedUsers-videoList-video-img"
+                      src={titlePic}
+                      alt={index}
+                    />
 
                     <div className="JoinedUsers-videoList-video-metadata-container">
-                      <h3 className="JoinedUsers-videoList-video-metadata-name"> {value} </h3>
+                      <h3 className="JoinedUsers-videoList-video-metadata-name">
+                        {" "}
+                        {value}{" "}
+                      </h3>
                     </div>
-
                   </div>
                 </ListGroupItem>
-              )
+              );
+            })}
+          </ListGroup>
+        </div>
 
-              })}
-            </ListGroup>
-          </div>
-
-        <Button className="JoinedUsers-goBack" onClick={this.props.onBackToHome}>Back</Button>
+        <Button
+          className="JoinedUsers-goBack"
+          onClick={this.props.onBackToHome}
+        >
+          Back
+        </Button>
       </div>
-
-      
     );
   }
 }
