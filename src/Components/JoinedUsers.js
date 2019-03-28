@@ -4,7 +4,6 @@ import "../Styles/JoinedUsers.css";
 
 import titlePic from "../res/No-Avatar-High-Definition.jpg";
 
-
 class JoinedUsers extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +19,6 @@ class JoinedUsers extends Component {
         <div className="JoinedUsers-videoList">
           <ListGroup>
             {this.props.users.map((value, index) => {
-
               return (
                 <ListGroupItem key={index} action>
                   <div className="JoinedUsers-videoList-video-container">
@@ -32,8 +30,7 @@ class JoinedUsers extends Component {
 
                     <div className="JoinedUsers-videoList-video-metadata-container">
                       <h3 className="JoinedUsers-videoList-video-metadata-name">
-                        {" "}
-                        {value}{" "}
+                        {value}
                       </h3>
                     </div>
                   </div>
