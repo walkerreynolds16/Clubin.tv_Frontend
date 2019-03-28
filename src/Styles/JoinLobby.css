@@ -12,3 +12,8 @@
   font-size: calc(10px + 2vmin);
 }
 
+.JoinLobby-logo-img {
+  position: absolute;
+  top: 10%;
+}
+

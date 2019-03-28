@@ -90,10 +90,11 @@ class JoinLobby extends Component {
   render() {
     return (
       <div className="JoinLobby">
-        <img src={titlePic} alt="Clubin.tv" style={{'position': 'relative', 'top': '50px'}}/>
+
+        
         <header className="JoinLobby-header">
 
-          
+          <img className="JoinLobby-logo-img" src={titlePic} alt="Clubin.tv" />
 
           <Form onSubmit={this.submitLobbyCode}>
             <Form.Group controlId="formLobbyCode">
