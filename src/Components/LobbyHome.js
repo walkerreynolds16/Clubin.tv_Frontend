@@ -7,6 +7,7 @@ import openSocket from "socket.io-client";
 
 import JoinedUsers from "./JoinedUsers";
 import AddVideo from "./AddVideo";
+import ManageVideos from "./ManageVideos";
 
 const socket = openSocket.connect(API_ENDPOINT, { transports: ["websocket"] });
 
@@ -25,7 +26,9 @@ class LobbyHome extends Component {
         playingVideo: false
       },
       showAddVideo: false,
-      showJoinedUsers: false
+      showJoinedUsers: false,
+      showManageVideos: false,
+      membersVideos: []
     };
   }
 
@@ -42,7 +45,7 @@ class LobbyHome extends Component {
     this.getLobbyInfo();
   }
 
-  lobbyUpdate = data => {
+  lobbyUpdate = (data) => {
     console.log("lobby Update");
     console.log(data["currentVideo"]);
 
@@ -55,7 +58,25 @@ class LobbyHome extends Component {
         playingVideo: data["playingVideo"]
       }
     });
+
+    this.updateMembersList(data)
   };
+
+  updateMembersList = (data) => {
+    var newList = []
+
+    for(var i = 0; i < data['videoQueue'].length; i++){
+      var video = data['videoQueue'][i]
+
+      if(video['memberName'] === this.state.memberName){
+        newList.push(video)
+      }
+    }
+
+    this.setState({
+      membersVideos: newList
+    })
+  }
 
   handleWindowClose = () => {
     var data = {
@@ -90,7 +111,8 @@ class LobbyHome extends Component {
   onBackToHome = () => {
     this.setState({
       showAddVideo: false,
-      showJoinedUsers: false
+      showJoinedUsers: false,
+      showManageVideos: false
     });
 
     this.forceUpdate();
@@ -99,6 +121,12 @@ class LobbyHome extends Component {
   viewJoinedUsers = () => {
     this.setState({
       showJoinedUsers: true
+    });
+  };
+
+  showManageVideos = () => {
+    this.setState({
+      showManageVideos: true
     });
   };
 
@@ -125,6 +153,17 @@ class LobbyHome extends Component {
       );
     }
 
+    if (this.state.showManageVideos) {
+      return (
+        <ManageVideos
+          onBackToHome={() => this.onBackToHome()}
+          lobbyInfo={this.state.lobbyInfo}
+          memberName={this.state.memberName}
+          membersVideos={this.state.membersVideos}
+        />
+      );
+    }
+
     return (
       <div className="LobbyHome">
         <header className="LobbyHome-header">
@@ -139,6 +178,8 @@ class LobbyHome extends Component {
 
         <div className="LobbyHome-button-container">
           <Button onClick={this.clickAddVideo}>Add Video</Button>
+          <br />
+          <Button onClick={this.showManageVideos}>Manage Videos</Button>
           <br />
           <Button onClick={this.viewJoinedUsers}>View Joined Users</Button>
         </div>

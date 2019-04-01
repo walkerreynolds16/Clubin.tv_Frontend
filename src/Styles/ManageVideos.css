@@ -1,54 +1,48 @@
-.AddVideo {
+.ManageVideos {
   text-align: center;
-  background-color: #FFF;
 }
 
-
-.AddVideo-header {
-  min-height: 100vh;
+.ManageVideos-header {
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  position: relative;
+  top: 2vh;
 }
 
-.AddVideo-search {
-  display: flex;
-  height: calc(10% + 30px);
-  align-items: flex-start;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  border-bottom: 2px;
-  margin-top: 30px;
-  border-color: black
+.ManageVideos-addvideo-button {
+  margin-top: 20px;
 }
 
-.AddVideo-videoList {
+
+.ManageVideos-videoList {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   position: absolute;
-  top: 12%;
   left: 0px;
   right: 0px;
   overflow-y: scroll;
-  height: 80%;
+  height: 72%;
+  margin-top: 20px;
 }
 
-.AddVideo-videoList-video-container {
+.ManageVideos-videoList-video-container {
   position: relative;
   display: flex;
 }
 
-.AddVideo-videoList-video-img {
+.ManageVideos-videoList-video-img {
   width: 120px;
   height: 90px;
   flex-shrink: 0;
 }
 
-.AddVideo-videoList-video-metadata-container {
+.ManageVideos-videoList-video-metadata-container {
   min-width: 0;
   overflow: hidden;
   flex-grow: 1;
@@ -56,23 +50,22 @@
 }
 
 
-.AddVideo-videoList-video-metadata-title {
+.ManageVideos-videoList-video-metadata-title {
   display: inline-block;
   margin-left: 5px;
   word-wrap: break-word;
   font-size: 3vmin !important;
 }
 
-.AddVideo-videoList-video-metadata-channelName {
+.ManageVideos-videoList-video-metadata-channelName {
   display: inline-block;
   margin-left: 5px;
   word-wrap: break-word;
   font-size: 2vmin !important;
 }
 
-.AddVideo-goBack {
+.ManageVideos-goBack {
   position: fixed;
   bottom: 1%;
   left: 5%;
 }
-
