@@ -76,6 +76,6 @@
 
 .JoinedUsers-goBack {
   position: fixed;
-  bottom: 1%;
-  left: 5%;
+  bottom: 10px;
+  left: 10px;
 }

@@ -14,7 +14,9 @@ class JoinedUsers extends Component {
   render() {
     return (
       <div className="JoinedUsers">
-        <header className="JoinedUsers-header">Joined Users</header>
+        <header className="JoinedUsers-header">
+          <h3>Joined Users</h3>
+        </header>
 
         <div className="JoinedUsers-videoList">
           <ListGroup>

@@ -11,7 +11,10 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   position: relative;
-  top: 2vh;
+  /* top: 2vh; */
+
+  border-style: solid;
+  border-width: medium;
 
 }
 
