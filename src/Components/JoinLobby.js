@@ -57,14 +57,22 @@ class JoinLobby extends Component {
           lobbyCode: this.state.lobbyCodeInput,
           memberName: this.state.memberName
         };
+
         this.props.joinedALobby(data);
+
       } else {
         //Member wasn't able to join, display why not
         alert(response["data"]["Message"]);
 
-        this.setState({
-          lobbyCodeInput: ""
-        });
+        if(response["data"]["Message"] === "Member name already exists"){
+          this.setState({
+            memberName: ""
+          })
+        }else {
+          this.setState({
+            lobbyCodeInput: ""
+          });
+        }
       }
     });
   };

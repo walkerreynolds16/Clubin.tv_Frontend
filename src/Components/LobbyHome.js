@@ -23,12 +23,14 @@ class LobbyHome extends Component {
         lobbyCode: this.props.lobbyCode,
         memberList: [],
         videoQueue: [],
-        playingVideo: false
+        playingVideo: false,
+        skippers: []
       },
       showAddVideo: false,
       showJoinedUsers: false,
       showManageVideos: false,
-      membersVideos: []
+      membersVideos: [],
+      isSkipper: false
     };
   }
 
@@ -47,7 +49,7 @@ class LobbyHome extends Component {
 
   lobbyUpdate = (data) => {
     console.log("lobby Update");
-    console.log(data["currentVideo"]);
+    console.log(data["skippers"]);
 
     this.setState({
       lobbyInfo: {
@@ -55,8 +57,10 @@ class LobbyHome extends Component {
         lobbyCode: data["lobbyCode"],
         memberList: data["memberList"],
         videoQueue: data["videoQueue"],
-        playingVideo: data["playingVideo"]
-      }
+        playingVideo: data["playingVideo"],
+        skippers: data['skippers']
+      },
+      isSkipper: data['skippers'].includes(this.state.memberName)
     });
 
     this.updateMembersList(data)
@@ -130,6 +134,10 @@ class LobbyHome extends Component {
     });
   };
 
+  sendVoteToSkip = () => {
+    socket.emit("Event_voteSkip", {'memberName': this.state.memberName, 'lobbyCode': this.state.lobbyCode})
+  }
+
   render() {
     console.log("lobbyInfo");
     console.log(this.state.lobbyInfo);
@@ -166,6 +174,7 @@ class LobbyHome extends Component {
 
     return (
       <div className="LobbyHome">
+
         <header className="LobbyHome-header">
           {!this.state.lobbyInfo.playingVideo && <h3>No one is Playing</h3>}
 
@@ -177,11 +186,26 @@ class LobbyHome extends Component {
         </header>
 
         <div className="LobbyHome-button-container">
-          <Button onClick={this.clickAddVideo}>Add Video</Button>
-          <br />
+          {/* <Button onClick={this.clickAddVideo}>Add Video</Button>
+          <br /> */}
           <Button onClick={this.showManageVideos}>Manage Videos</Button>
           <br />
           <Button onClick={this.viewJoinedUsers}>View Joined Users</Button>
+          <br />
+
+          
+          {!this.state.isSkipper &&
+            <Button onClick={this.sendVoteToSkip} disabled={!this.state.lobbyInfo.playingVideo}>Vote to Skip Video</Button>
+          }
+
+          {this.state.isSkipper &&
+            <Button onClick={this.sendVoteToSkip} disabled={!this.state.lobbyInfo.playingVideo}>Remove Skip Vote</Button>
+          }
+
+
+          {this.state.lobbyInfo.playingVideo &&
+            <h6>{this.state.lobbyInfo.skippers.length} have skipped out of {this.state.lobbyInfo.memberList.length} total people</h6>
+          }
         </div>
       </div>
     );
