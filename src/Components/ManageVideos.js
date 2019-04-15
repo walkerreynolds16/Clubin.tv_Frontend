@@ -1,7 +1,41 @@
 import React, { Component } from "react";
 import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 import "../Styles/ManageVideos.css";
 import AddVideo from "./AddVideo";
+
+const SortableItem = SortableElement(({value, index, onDeleteVideoCallback, addVideoToLobbyQueue}) => {
+  var imageLink = 'http://img.youtube.com/vi/' + value.video.videoId + '/0.jpg'
+  return(
+    <ListGroupItem onClick={() => addVideoToLobbyQueue(value.video)} key={index} action>
+      <div className="ManageVideos-videoList-video-container">
+        <img className="ManageVideos-videoList-video-img" src={imageLink} alt={index}/>
+        <div className="ManageVideos-videoList-video-metadata-container">
+          <h5 className="ManageVideos-videoList-video-metadata-title"> {value.video.videoTitle} </h5>
+          <br/>
+          <p className="ManageVideos-videoList-video-metadata-channelName">{value.video.channelName}</p>
+        </div>
+      </div>
+    </ListGroupItem>
+  )
+  
+});
+
+const SortableList = SortableContainer(({items, onDeleteVideoCallback, addVideoToLobbyQueue}) => {
+  return (
+
+    <ListGroup>
+        {items.map((value, index) => (
+
+          <SortableItem key={`item-${index}`} 
+                        index={index} 
+                        value={value}
+                        onDeleteVideoCallback={onDeleteVideoCallback}
+                        addVideoToLobbyQueue={addVideoToLobbyQueue} />
+        ))}
+    </ListGroup>
+  );
+});
 
 class ManageVideos extends Component {
   constructor(props) {
@@ -22,6 +56,12 @@ class ManageVideos extends Component {
     this.setState({
       showAddVideos: false
     })
+  }
+
+  
+
+  onDeleteVideoCallback = () => {
+
   }
 
   render() {
@@ -45,25 +85,15 @@ class ManageVideos extends Component {
 
 
         <div className="ManageVideos-videoList">
-            <ListGroup>
-              {this.props.membersVideos.map((value, index) => {
-                var imageLink = 'http://img.youtube.com/vi/' + value.videoId + '/0.jpg'
 
-              return (
-                <ListGroupItem onClick={() => this.addVideoToLobbyQueue(value)} key={index} action>
-                  <div className="ManageVideos-videoList-video-container">
-                    <img className="ManageVideos-videoList-video-img" src={imageLink} alt={index}/>
-                    <div className="ManageVideos-videoList-video-metadata-container">
-                      <h5 className="ManageVideos-videoList-video-metadata-title"> {value.videoTitle} </h5>
-                      <br/>
-                      <p className="ManageVideos-videoList-video-metadata-channelName">{value.channelName}</p>
-                    </div>
-                  </div>
-                </ListGroupItem>
-              )
+            <SortableList
+              items={this.props.membersVideos}
+              onSortEnd={this.props.onListSortEnd}
+              distance={2}
+              onDeleteVideoCallback={this.onDeleteVideoCallback}
+              addVideoToLobbyQueue={this.addVideoToLobbyQueue}/>
 
-              })}
-            </ListGroup>
+            
           </div>
 
         <Button

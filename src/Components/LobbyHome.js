@@ -73,7 +73,7 @@ class LobbyHome extends Component {
       var video = data['videoQueue'][i]
 
       if(video['memberName'] === this.state.memberName){
-        newList.push(video)
+        newList.push({'video': video, 'index':i})
       }
     }
 
@@ -138,6 +138,51 @@ class LobbyHome extends Component {
     socket.emit("Event_voteSkip", {'memberName': this.state.memberName, 'lobbyCode': this.state.lobbyCode})
   }
 
+  onListSortEnd = ({ oldIndex, newIndex }) => {
+    //Switch video spots in the members video list
+    var memVidsCopy = this.state.membersVideos.slice()
+    var temp = memVidsCopy[newIndex].video
+
+    memVidsCopy[newIndex].video = memVidsCopy[oldIndex].video
+    memVidsCopy[oldIndex].video = temp
+
+    
+    console.log("New Members Videos List")
+    console.log(memVidsCopy)
+
+    this.setState({
+      membersVideos: memVidsCopy
+    })
+
+    //Recreate the video queue
+    var videoQueueCopy = this.state.lobbyInfo.videoQueue.slice()
+
+    for(var i = 0; i < memVidsCopy.length; i++){
+      var videoIndex = memVidsCopy[i].index
+      videoQueueCopy[videoIndex] = memVidsCopy[i].video
+    }
+
+    console.log("New Video Queue")
+    console.log(videoQueueCopy)
+
+    this.setState({
+      lobbyInfo: {
+        videoQueue: videoQueueCopy,
+        currentVideo: this.state.lobbyInfo.currentVideo,
+        lobbyCode: this.state.lobbyInfo.lobbyCode,
+        memberList: this.state.lobbyInfo.memberList,
+        playingVideo: this.state.lobbyInfo.playingVideo,
+        skippers: this.state.lobbyInfo.skippers
+      }
+    })
+
+    console.log("new lobby info")
+    console.log(this.state.lobbyInfo)
+
+    socket.emit('Event_updateLobbyInfo', {'lobbyCode': this.state.lobbyCode, 'memberName': this.state.memberName, 'lobbyInfo': this.state.lobbyInfo})
+
+  }
+
   render() {
     console.log("lobbyInfo");
     console.log(this.state.lobbyInfo);
@@ -168,6 +213,7 @@ class LobbyHome extends Component {
           lobbyInfo={this.state.lobbyInfo}
           memberName={this.state.memberName}
           membersVideos={this.state.membersVideos}
+          onListSortEnd={this.onListSortEnd}
         />
       );
     }
