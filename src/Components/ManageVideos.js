@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Button, ListGroup, ListGroupItem, Dropdown, Glyphicon } from "react-bootstrap";
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 import "../Styles/ManageVideos.css";
 import AddVideo from "./AddVideo";
@@ -7,13 +7,39 @@ import AddVideo from "./AddVideo";
 const SortableItem = SortableElement(({value, index, onDeleteVideoCallback, addVideoToLobbyQueue}) => {
   var imageLink = 'http://img.youtube.com/vi/' + value.video.videoId + '/0.jpg'
   return(
-    <ListGroupItem onClick={() => addVideoToLobbyQueue(value.video)} key={index} action>
+    <ListGroupItem key={index} action>
       <div className="ManageVideos-videoList-video-container">
         <img className="ManageVideos-videoList-video-img" src={imageLink} alt={index}/>
         <div className="ManageVideos-videoList-video-metadata-container">
           <h5 className="ManageVideos-videoList-video-metadata-title"> {value.video.videoTitle} </h5>
           <br/>
           <p className="ManageVideos-videoList-video-metadata-channelName">{value.video.channelName}</p>
+        </div>
+        <div className="ManageVideos-videoList-video-options-container">
+          
+
+            {index <= 1 ? (
+            <Dropdown alignRight title="Menu" id="menu-nav-dropdown">
+
+              <Dropdown.Toggle noCaret>
+              </Dropdown.Toggle>
+
+
+              <Dropdown.Menu>
+                <Dropdown.Item onSelect={() => onDeleteVideoCallback(index)}>Delete</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>) : (
+            <Dropdown alignRight dropup title="Menu" id="menu-nav-dropdown">
+
+              <Dropdown.Toggle noCaret>
+              </Dropdown.Toggle>
+
+
+              <Dropdown.Menu>
+                <Dropdown.Item onSelect={() => onDeleteVideoCallback(index)}>Delete</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>)}
+
         </div>
       </div>
     </ListGroupItem>
@@ -60,9 +86,7 @@ class ManageVideos extends Component {
 
   
 
-  onDeleteVideoCallback = () => {
-
-  }
+  
 
   render() {
     if (this.state.showAddVideos) {
@@ -90,7 +114,7 @@ class ManageVideos extends Component {
               items={this.props.membersVideos}
               onSortEnd={this.props.onListSortEnd}
               distance={2}
-              onDeleteVideoCallback={this.onDeleteVideoCallback}
+              onDeleteVideoCallback={this.props.onDeleteVideoCallback}
               addVideoToLobbyQueue={this.addVideoToLobbyQueue}/>
 
             

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Col, Row, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button, Form, Col, Row, ListGroup, ListGroupItem, Modal } from 'react-bootstrap';
 import '../Styles/AddVideo.css';
 import Axios from 'axios'
 import {API_ENDPOINT, YOUTUBE_API_KEY} from '../api-config.js'
@@ -13,7 +13,9 @@ class AddVideo extends Component {
       lobbyCode: this.props.lobbyCode,
       memberName: this.props.memberName,
       searchVideoInput: '',
-      searchList: []
+      searchList: [],
+      showAddVideoModal: false,
+      modalVideo: {}
     }
   }
 
@@ -88,8 +90,27 @@ class AddVideo extends Component {
 
   }
 
+  handleCloseAddVideoModal = () =>{
+    this.setState({
+      showAddVideoModal: false,
+      modalVideo: {}
+    })
+  }
+
+  handleShowAddVideoModal = (value) =>{
+    this.setState({
+      showAddVideoModal: true,
+      modalVideo: value
+    })
+  }
+
   addVideoToLobbyQueue = (value) => {
     console.log(value)
+
+    this.setState({
+      showAddVideoModal: false,
+      modalVideo: {}
+    })
 
     var data = {
       lobbyCode: this.state.lobbyCode,
@@ -135,7 +156,7 @@ class AddVideo extends Component {
                 var imageLink = 'http://img.youtube.com/vi/' + value.videoId + '/0.jpg'
 
               return (
-                <ListGroupItem onClick={() => this.addVideoToLobbyQueue(value)} key={index} action>
+                <ListGroupItem onClick={() => this.handleShowAddVideoModal(value)} key={index} action>
                   <div className="AddVideo-videoList-video-container">
                     <img className="AddVideo-videoList-video-img" src={imageLink} alt={index}/>
                     <div className="AddVideo-videoList-video-metadata-container">
@@ -152,6 +173,28 @@ class AddVideo extends Component {
           </div>
 
           <Button className="AddVideo-goBack" onClick={this.props.onBackToHome}>Back</Button>
+
+          <Modal show={this.state.showAddVideoModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Video</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>              
+              <div className="AddVideo-videoList-video-container">
+                <img className="AddVideo-videoList-video-img" src={'http://img.youtube.com/vi/' + this.state.modalVideo.videoId + '/0.jpg'} alt={this.state.modalVideo.videoId}/>
+                <div className="AddVideo-videoList-video-metadata-container">
+                  <h5 className="AddVideo-videoList-video-metadata-title"> {this.state.modalVideo.videoTitle} </h5>
+                  <br/>
+                  <p className="AddVideo-videoList-video-metadata-channelName">{this.state.modalVideo.channelName}</p>
+                </div>
+              </div>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleCloseAddVideoModal}>Cancel</Button>
+              <Button variant="primary" onClick={() => this.addVideoToLobbyQueue(this.state.modalVideo)}>Add Video</Button>
+            </Modal.Footer>
+          </Modal>
 
       </div>
 

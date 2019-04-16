@@ -165,15 +165,11 @@ class LobbyHome extends Component {
     console.log("New Video Queue")
     console.log(videoQueueCopy)
 
+    var lobbyInfoCopy = this.state.lobbyInfo
+    lobbyInfoCopy.videoQueue = videoQueueCopy
+
     this.setState({
-      lobbyInfo: {
-        videoQueue: videoQueueCopy,
-        currentVideo: this.state.lobbyInfo.currentVideo,
-        lobbyCode: this.state.lobbyInfo.lobbyCode,
-        memberList: this.state.lobbyInfo.memberList,
-        playingVideo: this.state.lobbyInfo.playingVideo,
-        skippers: this.state.lobbyInfo.skippers
-      }
+      lobbyInfo: lobbyInfoCopy
     })
 
     console.log("new lobby info")
@@ -183,9 +179,48 @@ class LobbyHome extends Component {
 
   }
 
+  onDeleteVideoCallback = (index) => {
+    //remove video from local queue
+    var memVidsCopy = this.state.membersVideos.slice()
+
+    var deletedVideo = memVidsCopy.splice(index, 1)[0]
+    console.log("deletedVideo")
+    console.log(deletedVideo)
+
+    this.setState({
+      membersVideos: memVidsCopy
+    })
+
+    //update server
+
+    var videoQueueCopy = this.state.lobbyInfo.videoQueue.slice()
+
+    //remove video from video queue
+    videoQueueCopy.splice(deletedVideo.index, 1)
+
+    console.log("New Video Queue")
+    console.log(videoQueueCopy)
+
+    var lobbyInfoCopy = this.state.lobbyInfo
+    lobbyInfoCopy.videoQueue = videoQueueCopy
+
+    this.setState({
+      lobbyInfo: lobbyInfoCopy
+    })
+
+    // console.log("new lobby info(copy)")
+    // console.log(this.state.lobbyInfo)
+
+    // console.log("new lobby info(state)")
+    // console.log(this.state.lobbyInfo)
+
+    socket.emit('Event_updateLobbyInfo', {'lobbyCode': this.state.lobbyCode, 'memberName': this.state.memberName, 'lobbyInfo': this.state.lobbyInfo})
+
+    
+
+  }
+
   render() {
-    console.log("lobbyInfo");
-    console.log(this.state.lobbyInfo);
 
     if (this.state.showAddVideo) {
       return (
@@ -214,6 +249,7 @@ class LobbyHome extends Component {
           memberName={this.state.memberName}
           membersVideos={this.state.membersVideos}
           onListSortEnd={this.onListSortEnd}
+          onDeleteVideoCallback={this.onDeleteVideoCallback}
         />
       );
     }

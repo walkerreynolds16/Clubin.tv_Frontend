@@ -28,7 +28,7 @@
   right: 0px;
   overflow-y: scroll;
   height: 72%;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .ManageVideos-videoList-video-container {
@@ -43,10 +43,12 @@
 }
 
 .ManageVideos-videoList-video-metadata-container {
-  min-width: 0;
+  min-width: 360px;
   overflow: hidden;
   flex-grow: 1;
   padding: 0 8px;
+  max-height: 90px;
+  max-width: 360px;
 }
 
 
@@ -55,6 +57,7 @@
   margin-left: 5px;
   word-wrap: break-word;
   font-size: 3vmin !important;
+  margin-bottom: 0px;
 }
 
 .ManageVideos-videoList-video-metadata-channelName {
@@ -64,10 +67,22 @@
   font-size: 2vmin !important;
 }
 
+.ManageVideos-videoList-video-options-container {
+  flex-grow: 1;
+  padding: 0 8px;
+}
+
+
+
 .ManageVideos-goBack {
   position: fixed;
   bottom: 10px;
   left: calc(50% - 290px);
+}
+
+.dropdown-menu {
+  min-width: 2rem;
+  float: right;
 }
 
 @media only screen and (max-width: 600px) {
