@@ -33,6 +33,11 @@ class JoinLobby extends Component {
       e.preventDefault();
     }
 
+    if(this.state.lobbyCodeInput.length == 0 || this.state.memberName.length == 0){
+      alert("The fields cannot be empty")
+      return
+    }
+
     console.log(this.state.lobbyCodeInput);
 
     if (this.state.lobbyCodeInput.match(/\d+/g)) {

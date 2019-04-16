@@ -22,7 +22,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(12px + 1vmin);
   position: absolute;
   left: 0px;
   right: 0px;
@@ -43,12 +43,12 @@
 }
 
 .ManageVideos-videoList-video-metadata-container {
-  min-width: 360px;
+  min-width: 0;
   overflow: hidden;
   flex-grow: 1;
   padding: 0 8px;
   max-height: 90px;
-  max-width: 360px;
+  max-width: calc(50%)
 }
 
 
@@ -70,8 +70,28 @@
 .ManageVideos-videoList-video-options-container {
   flex-grow: 1;
   padding: 0 8px;
+  right: 0px;
+  position: absolute;
 }
 
+.dropdown-toggle btn btn-primary {
+  right: 0px;
+  padding: 0px;
+}
+
+.list-group-item {
+  padding: .75rem 1.00rem;
+}
+ 
+
+.dropdown-menu {
+  min-width: 2rem;
+  float: right;
+}
+
+.dropdown {
+  width: 20px;
+}
 
 
 .ManageVideos-goBack {
@@ -80,10 +100,6 @@
   left: calc(50% - 290px);
 }
 
-.dropdown-menu {
-  min-width: 2rem;
-  float: right;
-}
 
 @media only screen and (max-width: 600px) {
   .ManageVideos-goBack {

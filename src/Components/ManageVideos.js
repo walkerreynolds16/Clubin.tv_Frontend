@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ListGroup, ListGroupItem, Dropdown, Glyphicon } from "react-bootstrap";
+import { Button, ListGroup, ListGroupItem, Dropdown, DropdownButton } from "react-bootstrap";
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 import "../Styles/ManageVideos.css";
 import AddVideo from "./AddVideo";
@@ -19,26 +19,20 @@ const SortableItem = SortableElement(({value, index, onDeleteVideoCallback, addV
           
 
             {index <= 1 ? (
-            <Dropdown alignRight title="Menu" id="menu-nav-dropdown">
+            <DropdownButton
+              size="sm">
+              <Dropdown.Item onSelect={() => onDeleteVideoCallback(index)}>Delete</Dropdown.Item>
+            </DropdownButton>
+            
 
-              <Dropdown.Toggle noCaret>
-              </Dropdown.Toggle>
+            ) : (
 
-
-              <Dropdown.Menu>
-                <Dropdown.Item onSelect={() => onDeleteVideoCallback(index)}>Delete</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>) : (
-            <Dropdown alignRight dropup title="Menu" id="menu-nav-dropdown">
-
-              <Dropdown.Toggle noCaret>
-              </Dropdown.Toggle>
-
-
-              <Dropdown.Menu>
-                <Dropdown.Item onSelect={() => onDeleteVideoCallback(index)}>Delete</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>)}
+            <DropdownButton
+              size="sm"
+              dropup={true}>
+              <Dropdown.Item onSelect={() => onDeleteVideoCallback(index)}>Delete</Dropdown.Item>
+            </DropdownButton>
+            )}
 
         </div>
       </div>
