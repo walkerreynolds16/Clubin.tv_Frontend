@@ -43,8 +43,15 @@ class LobbyHome extends Component {
     });
 
     socket.on("Event_lobbyUpdate", data => this.lobbyUpdate(data));
+    socket.on("Event_lobbyWasDeleted", data => this.lobbyWasDeleted(data));
+
 
     this.getLobbyInfo();
+  }
+
+  lobbyWasDeleted = (data) => {
+    alert("This lobby doesn\'t exist anymore. You will be directed to the home page.")
+    window.location.reload()
   }
 
   lobbyUpdate = (data) => {
