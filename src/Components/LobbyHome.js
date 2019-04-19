@@ -36,6 +36,7 @@ class LobbyHome extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", ev => this.handleWindowClose(ev));
+    window.addEventListener("focus", () => this.onGainFocus())
 
     socket.emit("Event_mobileConnection", {
       lobbyCode: this.state.lobbyCode,
@@ -47,6 +48,11 @@ class LobbyHome extends Component {
 
 
     this.getLobbyInfo();
+  }
+
+  onGainFocus = () => {
+    console.log("on Focus")
+    this.getLobbyInfo()
   }
 
   lobbyWasDeleted = (data) => {
